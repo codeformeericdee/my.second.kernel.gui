@@ -3,12 +3,41 @@
 ; Stay tuned to this repository for continued updates
 ; https://github.com/AllComputerScience/
 
-org 0x7c0
+; Naming convention:
+; All route type labels that tend to be static are UPPERCASE_LABELED
+; All external calls/method declarations are lowercase_labeled
+; All local loops are .camelCaseLabeled
+; All headers denote type then description as UPPERCASE_lowercase_labeled
 
-mov ah, 0x0e
-mov al, 'H'
-int 0x10
-jmp $
+bits 16
+
+jmp BOOTLOADER ; This will increment the instruction pointer to pass the included code
+
+%include "sources/bootloader/boot_header.asm"
+%include "sources/bios_calls/interrupt_10h-16d.asm"
+
+if_ds_works:
+    db 'The data segment was loaded properly.', 0xa, 0xd, 255
+
+if_boot_faults:
+    db 'There was a boot error that could not be caught.', 0xa, 0xd, 255
+
+BOOTLOADER:
+
+    mov ax, ADDRESS_bootable
+    mov ds, ax
+
+    mov dx, 4
+call display_add_spaces_by_dx_value
+
+    mov si, if_ds_works
+call display_si
+
+    .bootFault:
+    mov si, if_boot_faults
+call display_si
+    cli
+    hlt
 
 times 510 - ($-$$) db 0
 dw 0xaa55

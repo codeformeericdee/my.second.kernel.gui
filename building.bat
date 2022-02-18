@@ -12,7 +12,7 @@ set dependencies_directory=dependencies
 set python_environment_directory=%dependencies_directory%\python_virtual_environment
 
 
-:starting_docker
+:building_dependencies
 set /p activity_command=Needs command: 
 echo This is what was received: %docker_command%
 echo.
