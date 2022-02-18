@@ -1,3 +1,14 @@
+; Kernel for easy entry into coding and building operating systems writen by Eric Dee
+; Any questions, please see the numerous other repositories I wrote myself while leading up to and preparing this project
+; Stay tuned to this repository for continued updates
+; https://github.com/AllComputerScience/
+
+; Naming convention:
+; All route type labels that tend to be static are UPPERCASE_LABELED
+; All external calls/method declarations are lowercase_labeled
+; All local loops are .camelCaseLabeled
+; All headers denote type then description as UPPERCASE_lowercase_labeled
+
 Bits 16
 
     jmp KERNEL
