@@ -1,0 +1,5 @@
+python_virtual_environment/
+*.bin
+python_get3.exe
+session.txt
+settings.txt
