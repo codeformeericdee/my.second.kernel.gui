@@ -1,4 +1,4 @@
-# Makefile for building an operating system assemblies.
+# Makefile for building an operating system assemblies written by Eric Dee
 
 # NOTE: Should auto generate primary directories
 
