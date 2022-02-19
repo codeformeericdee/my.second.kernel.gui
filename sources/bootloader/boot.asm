@@ -18,7 +18,7 @@ jmp BOOTLOADER ; This will increment the instruction pointer to pass the include
 %include "sources/bios_calls/disk/interrupt_13h-19d.asm"
 
 if_ds_works:
-    db 'The data segment was loaded properly.', 0xa, 0xd, 255
+    db 'The boot data segment was loaded properly.', 0xa, 0xd, 255
 
 if_boot_faults:
     db 'There was a boot error that could not be caught.', 0xa, 0xd, 255
