@@ -31,8 +31,6 @@ BOOTLOADER:
 call display_si
 
 call disk_place_sector1_into_memory
-call disk_place_sector2_into_memory
-
     jmp ADDRESS_bootable:BOOT_SECTOR
 
     .bootFault:
@@ -43,6 +41,7 @@ call display_si
 
 BOOT_SECTOR:
 
+call disk_place_sector2_into_memory
     jmp 0:ADDRESS_kernel
 
 times 510 - ($-$$) db 0
