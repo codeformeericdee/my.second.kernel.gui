@@ -4,3 +4,4 @@
 
 ADDRESS_bootable: equ 0x7c0
 ADDRESS_kernel: equ 0x19A1
+VALUE_kernel_size: equ 3584

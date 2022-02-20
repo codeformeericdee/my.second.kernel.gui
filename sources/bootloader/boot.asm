@@ -11,14 +11,12 @@
 
 bits 16
 
-jmp BOOTLOADER ; This will increment the instruction pointer to pass the included code
+    jmp BOOTLOADER ; This will increment the instruction pointer to pass the included code
 
 %include "sources/bootloader/boot_header.asm"
 %include "sources/bios_calls/display/interrupt_10h-16d.asm"
 %include "sources/bios_calls/disk/interrupt_13h-19d.asm"
-
-if_ds_works:
-    db 'The boot data segment was loaded properly.', 0xa, 0xd, 255
+%include "sources/memory_tracking/header_calculators.asm"
 
 if_boot_faults:
     db 'There was a boot error that could not be caught.', 0xa, 0xd, 255
@@ -27,8 +25,6 @@ BOOTLOADER:
 
     mov ax, ADDRESS_bootable
     mov ds, ax
-    mov si, if_ds_works
-call display_si
 
 call disk_place_sector1_into_memory
     jmp ADDRESS_bootable:BOOT_SECTOR
@@ -41,6 +37,7 @@ call display_si
 
 BOOT_SECTOR:
 
+call calculate_kernel_sector_count
 call disk_place_sector2_into_memory
     jmp 0:ADDRESS_kernel
 

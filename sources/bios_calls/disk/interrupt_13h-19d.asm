@@ -58,7 +58,7 @@ disk_place_sector2_into_memory:
     mov bx, ADDRESS_kernel ; Offset
 
     mov ah, 2  ; Read disk argument
-    mov al, 3  ; Amount of sectors to be read
+    mov al, [kernel_sector_count]  ; Amount of sectors to be read
     int 19
     jnc .exit
     mov si, if_sector2_load_fails

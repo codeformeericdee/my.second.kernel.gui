@@ -11,15 +11,13 @@
 
 bits 16
 
-kernelSize: equ 1536
-
     jmp KERNEL
 
-    %include "sources/operating_system/kernel_header.asm"
-    %include "sources/hardware_conventions/global_descriptor_table/global_descriptor_table.asm"
-    %include "sources/bios_calls/display/interrupt_10h-16d.asm"
-    %include "sources/hardware_conventions/vesa/vbe_header.asm"
-    %include "sources/hardware_conventions/vesa/vbe-vesa.asm"
+%include "sources/operating_system/kernel_header.asm"
+%include "sources/hardware_conventions/global_descriptor_table/global_descriptor_table.asm"
+%include "sources/bios_calls/display/interrupt_10h-16d.asm"
+%include "sources/hardware_conventions/vbe_vesa/vbe_header.asm"
+%include "sources/hardware_conventions/vbe_vesa/vbe-vesa.asm"
 
 if_ds_works:
     db 'The kernel data segment was loaded properly.', 0xa, 0xd, 255
@@ -71,7 +69,7 @@ PROTECTED_32_BIT_MODE:
 
     xor eax, eax
     mov eax, [ADDRESS_kernel] 
-    add eax, kernelSize
+    add eax, VALUE_kernel_size
 
     kernel_32_bits_calculated_end:
         dw 0
@@ -95,11 +93,11 @@ PROTECTED_32_BIT_MODE:
     add edx, 40
     mov edi, [edx]
     mov ecx, 1920*1080   ; ARGB (8888 bits per 32 bytes)
-    mov eax, 000000ffh   ; Pixel color
+    mov eax, 12344444h   ; Pixel color
     rep stosd
     popa
 
     cli
     hlt
 
-times kernelSize-($-$$) db 0 ; Limit the size of the file as needed
+times VALUE_kernel_size-($-$$) db 0 ; Limit the size of the file as needed
