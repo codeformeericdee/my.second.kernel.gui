@@ -1,3 +1,5 @@
+; Sector calculator written by Eric Dee
+
 %include "sources/operating_system/kernel_header.asm"
 
 calculate_kernel_sector_count:
@@ -13,5 +15,3 @@ calculate_kernel_sector_count:
     kernel_sector_count: equ kernel_calculated_sector_count
     popa
     ret
-
-skip_calculation:

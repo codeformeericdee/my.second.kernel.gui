@@ -11,21 +11,21 @@
 
 bits 16
 
-    jmp KERNEL
+    jmp 0:KERNEL
 
 %include "sources/operating_system/kernel_header.asm"
 %include "sources/hardware_conventions/global_descriptor_table/global_descriptor_table.asm"
-%include "sources/bios_calls/display/interrupt_10h-16d.asm"
 %include "sources/hardware_conventions/vbe_vesa/vbe_header.asm"
 %include "sources/hardware_conventions/vbe_vesa/vbe-vesa.asm"
+%include "sources/bios_calls/display/interrupt_10h-16d.asm"
 
 if_ds_works:
     db 'The kernel data segment was loaded properly.', 0xa, 0xd, 255
 
 KERNEL:
 
-    org ADDRESS_kernel
-
+    ; org ADDRESS_kernel ; Fyi: org is needed to set the segments with a recent address if not using a linker. Uncomment this in order to use it
+    ; These parts read origin data into memory. The includes are needed to be found, so this section is written after the includes
     mov ax, cs
     mov ds, ax
     mov si, if_ds_works
@@ -49,6 +49,8 @@ call enable_vbe_vesa
 ; Note: It would be a good practice to calculate the end of the 16 bit kernel. Not a priority
 
 bits 32
+
+%include "sources/operating_system/display/32_bit/vbe-vesa_soft_functions.asm"
 
 PROTECTED_32_BIT_MODE:
 
@@ -88,16 +90,21 @@ PROTECTED_32_BIT_MODE:
     mov ecx, 64                      ; As the mib is 256 bytes long, dividing by 64 generates 4 double words
     rep movsd                        ; Repeats move from esi to edi in "chunks" using ecx as the argument
 
-    pusha
-    mov edx, [kernel_32_bits_end]
-    add edx, 40
-    mov edi, [edx]
-    mov ecx, 1920*1080   ; ARGB (8888 bits per 32 bytes)
-    mov eax, 12344444h   ; Pixel color
-    rep stosd
-    popa
+[extern Validate_C_Entry]
+
+    call Validate_C_Entry
+
+call vbe_clean_screen_for_end_of_process
 
     cli
     hlt
+
+;;;;;;;;;;;;;;;;;;;
+; C linker sections
+section .text
+section .bss
+section .rodata
+section .data
+;;;;;;;;;;;;;;;;;;;
 
 times VALUE_kernel_size-($-$$) db 0 ; Limit the size of the file as needed

@@ -11,7 +11,7 @@
 
 bits 16
 
-    jmp BOOTLOADER ; This will increment the instruction pointer to pass the included code
+    jmp 0x7c0:BOOTLOADER ; This will increment the instruction pointer to pass the include code
 
 %include "sources/bootloader/boot_header.asm"
 %include "sources/bios_calls/display/interrupt_10h-16d.asm"
@@ -40,6 +40,12 @@ BOOT_SECTOR:
 call calculate_kernel_sector_count
 call disk_place_sector2_into_memory
     jmp 0:ADDRESS_kernel
+
+    .bootFault:
+    mov si, if_boot_faults
+call display_si
+    cli
+    hlt
 
 times 510 - ($-$$) db 0
 dw 0xaa55

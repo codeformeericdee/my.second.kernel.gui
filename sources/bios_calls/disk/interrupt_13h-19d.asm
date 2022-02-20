@@ -23,9 +23,9 @@ disk_place_sector1_into_memory:
     mov cl, 1 ; Sector
 
     ; Block function: places zero into the extra segment register then sets the segment offset to the magic number address (0x7c0)
-    xor bx, bx ; First reference
-    mov es, bx ; Readable segment
     mov bx, ADDRESS_bootable ; Offset
+    mov es, bx ; Readable segment
+    xor bx, bx ; First reference
 
     mov ah, 2  ; Read disk argument
     mov al, 1  ; Amount of sectors to be read

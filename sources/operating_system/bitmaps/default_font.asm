@@ -1,3 +1,5 @@
+; This is just a default font I found on the internet. I intend to change it over some lazy weekend.
+
 ;;;
 ;;; font file - 0-127 for ascii, 8x16 pixels each. Stored as 1 byte (8 bits) * 16 = 16 bytes per char, 127*16 = 2048 = 4 512 byte sectors
 ;;; based on GNU Unifont 8x16
