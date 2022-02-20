@@ -57,9 +57,9 @@ PROTECTED_32_BIT_MODE:
     mov ax, gdt_data_segment
     mov ds, ax
     mov es, ax
-	mov fs, ax
-	mov gs, ax
-	mov ss, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
     mov ebp, 0x90000
     mov esp, ebp
 
