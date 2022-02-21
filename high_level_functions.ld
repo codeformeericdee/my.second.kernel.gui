@@ -1,4 +1,4 @@
-ENTRY(Validate_C_Entry)
+ENTRY(ValidateCEntry)
 INPUT(builds/operating_system/kernel.o builds/operating_system/high_level_functions.o)
 OUTPUT(builds/operating_system/kernel.bin)
 OUTPUT_FORMAT(binary)

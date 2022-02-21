@@ -76,6 +76,7 @@ PROTECTED_32_BIT_MODE:
     kernel_32_bits_calculated_end:
         dw 0
     mov [kernel_32_bits_calculated_end], eax
+    global kernel_32_bits_end
     kernel_32_bits_end: equ kernel_32_bits_calculated_end
     xor eax, eax
 
@@ -90,9 +91,12 @@ PROTECTED_32_BIT_MODE:
     mov ecx, 64                      ; As the mib is 256 bytes long, dividing by 64 generates 4 double words
     rep movsd                        ; Repeats move from esi to edi in "chunks" using ecx as the argument
 
-[extern Validate_C_Entry]
+[extern ValidateCEntry]
+[extern ConfirmLocation]
+[extern EntryPointTestingGrounds]
 
-    call Validate_C_Entry
+    call ValidateCEntry
+    call EntryPointTestingGrounds
 
 call vbe_clean_screen_for_end_of_process
 
