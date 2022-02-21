@@ -1,4 +1,4 @@
-void CleanScreen(int color)
+void CleanScreen(unsigned int color)
 {
     // extern void kernel_32_bits_end(void); - This worked well with hardcoded values
 
