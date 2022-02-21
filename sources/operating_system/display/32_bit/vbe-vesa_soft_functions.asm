@@ -7,7 +7,7 @@ vbe_clean_screen_for_end_of_process:
     add edx, 40
     mov edi, [edx]
     mov ecx, 1920*1080   ; ARGB (8888 bits per 32 bytes)
-    mov eax, 44444444h   ; Pixel color
+    mov eax, 44440000h   ; Pixel color
     rep stosd
     popa
     ret

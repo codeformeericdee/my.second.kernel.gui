@@ -19,7 +19,8 @@ operating_system_sources_directory = $(sources_directory)/$(operating_system_dir
 operating_system_build_directory = $(builds_directory)/$(operating_system_directory)
 
 c_source_name = high_level_functions
-clang_flags = -c -O0 -std=c17 -ffreestanding -march=i386 -m32 -fno-builtin -nostdinc
+# This needs to be O1 or the bss fails
+clang_flags = -c -O1 -std=c17 -ffreestanding -march=i386 -m32 -fno-builtin -nostdinc
 
 application_directory = application
 
